@@ -85,6 +85,9 @@ public class VboxLayout implements LayoutManager {
 
 		return dim;
 	}
+	/**Question 15 
+	 * Windows.pack() utilise les méthodes layoutSize pour donner la taille la plus appropriée à la fenêtre 
+	 */
 
 	/* Required by LayoutManager. */
 	public Dimension minimumLayoutSize(Container parent) {
