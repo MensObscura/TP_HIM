@@ -3,6 +3,7 @@ package tp3;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 
 
@@ -13,6 +14,7 @@ public class VboxLayout implements LayoutManager {
 	private int minWidth = 0, minHeight = 0;
 	// largeur et hauteur preferees du conteneur
 	private int preferredWidth = 0, preferredHeight = 0;
+	private boolean sizeUnknown = true;
 
 	public VboxLayout() {
 		this(2);
@@ -36,15 +38,31 @@ public class VboxLayout implements LayoutManager {
 		// nombre de composants du conteneur
 		int nComps = parent.getComponentCount();
 
+		Dimension d = null;
 		//Reset de preferred/minimum width and height.
 		preferredWidth = 0;
 		preferredHeight = 0;
 		minWidth = 0;
 		minHeight = 0;
 
-		// Ecrire le code qui permet de calculer les dimensions minimales et
-		// preferrees du conteneur en utilisant les dimensions des differents
-		// composants qu'il contient
+		for (int i = 0; i < nComps; i++) {
+			Component c = parent.getComponent(i);
+			if (c.isVisible()) {
+				d = c.getPreferredSize();
+
+				if (i > 0) {
+					preferredWidth += d.width/2;
+					preferredHeight += vgap;
+				} else {
+					preferredWidth = d.width;
+				}
+				preferredHeight += d.height;
+
+				minWidth = Math.max(c.getMinimumSize().width,
+						minWidth);
+				minHeight = preferredHeight;
+			}
+		}
 
 	}
 
@@ -52,10 +70,18 @@ public class VboxLayout implements LayoutManager {
 	/* Required by LayoutManager. */
 	public Dimension preferredLayoutSize(Container parent) {
 		Dimension dim = new Dimension(0, 0);
+		int nComps = parent.getComponentCount();
 
-		// Retourne les dimensions preferees du conteneur en utilisant
-		// preferredWidth et preferredHeight ainsi que les dimensions du bord
-		// du conteneur (Insets)
+		setSizes(parent);
+
+		//Always add the container's insets!
+		Insets insets = parent.getInsets();
+		dim.width = preferredWidth
+				+ insets.left + insets.right ;
+		dim.height = preferredHeight
+				+ insets.top + insets.bottom +(10*nComps);
+
+		sizeUnknown = false;
 
 		return dim;
 	}
@@ -63,9 +89,14 @@ public class VboxLayout implements LayoutManager {
 	/* Required by LayoutManager. */
 	public Dimension minimumLayoutSize(Container parent) {
 		Dimension dim = new Dimension(0, 0);
-		// Retourne les dimensions minimales du conteneur en utilisant
-		// minWidth et minHeight ainsi que les dimensions du bord
-		// du conteneur (Insets)
+		int nComps = parent.getComponentCount();
+
+		//Always add the container's insets!
+		Insets insets = parent.getInsets();
+		dim.width = minWidth +(insets.left + insets.right);
+		dim.height = minHeight + (insets.top + insets.bottom)+(10*nComps);
+
+		sizeUnknown = false;
 
 		return dim;
 	}
@@ -79,11 +110,51 @@ public class VboxLayout implements LayoutManager {
 	 * of applets, at least, they probably won't be.
 	 */
 	public void layoutContainer(Container parent) {
-		// Pour tous les composants visibles, definir la position et
-		// la taille de chacun des composants en utilisant la methode
-		// setBounds
+		Insets insets = parent.getInsets();
+		int padding = 10;
+		int nComps = parent.getComponentCount();
+		int maxWidth = parent.getWidth()
+				- (insets.left + insets.right)-(10*nComps);
+		int maxHeight = parent.getHeight()
+				- (insets.top + insets.bottom)-(10*nComps);
+		int previousWidth = 0, previousHeight = 0;
+		int x = 0, y = insets.top;
+		int xFudge = 0, yFudge = 0;
+		boolean oneColumn = false;
 
+		// Go through the components' sizes, if neither
+		// preferredLayoutSize nor minimumLayoutSize has
+		// been called.
+		if (sizeUnknown) {
+			setSizes(parent);
+		}
 
+		if (maxWidth <= minWidth) {
+			oneColumn = true;
+		}
+
+		if (maxWidth > preferredWidth) {
+			xFudge = (maxWidth - preferredWidth);
+		}
+
+		if (maxHeight > preferredHeight) {
+			yFudge = (maxHeight - preferredHeight);
+		}
+
+		for (int i = 0 ; i < nComps ; i++) {
+			Component c = parent.getComponent(i);
+			if (c.isVisible()) {
+				Dimension d = c.getPreferredSize();
+				y+=previousHeight+padding;
+				x =((preferredWidth-d.width)/2);
+				// Set the component's size and position.
+				c.setBounds(x, y, d.width, d.height);
+
+				previousWidth = d.width;
+				previousHeight = d.height;
+			}
+		}
+	
 	}
 
 	public String toString() {
