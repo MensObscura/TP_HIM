@@ -1,4 +1,4 @@
-package IHM;
+package tp4;
 
 import java.awt.Graphics;
 
@@ -14,6 +14,7 @@ public class MonPanel extends JPanel {
 	
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
+		//f.setContentPane(new MonPanel());
 		f.setContentPane(new ArdoiseMagique());
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(200,200);

@@ -1,4 +1,4 @@
-package IHM;
+package tp4;
 
 /**
  * ArdoiseMagique.java
@@ -145,7 +145,7 @@ public class ArdoiseMagique extends JPanel implements MouseListener ,MouseMotion
 	
 		
 			
-			this.addPoint(arg0.getXOnScreen(),arg0.getYOnScreen()-55);
+			this.addPoint(arg0.getXOnScreen(),arg0.getYOnScreen()-60);
 		
 	}
 
