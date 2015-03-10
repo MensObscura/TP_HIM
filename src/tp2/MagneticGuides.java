@@ -89,6 +89,7 @@ public class MagneticGuides extends JFrame {
 						for(CShape s:guides){
 							
 							canvas.addShape(s);
+							System.out.println(s.hasTag(hTag));
 							s.addTag(sTag);
 							s.belowAll();
 							
@@ -206,6 +207,7 @@ public class MagneticGuides extends JFrame {
 								BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
 						seg.belowAll();
 						guides.add(seg);
+						guides.contains(seg);
 					}
 				};
 
