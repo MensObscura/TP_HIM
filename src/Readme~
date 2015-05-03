@@ -1,0 +1,40 @@
+Thibault Rosa 
+Emeline Salomon
+
+
+TP1 Bouton :
+------------
+
+Rien de spécifique tout est dis dans le sujet
+
+TP2 Magnetics guideslines :
+----------------------------
+
+Pour creer un guide, il faut : 
+
+- Faire un clique gauche pour un guide horizontal.
+
+- Faire un clique droit pour un guide vertical.
+
+Lorsque vous survolez un guide il s'épaissit. Un fois epaissit vous pouvez agir dessus.
+
+
+Pour déplacer un guide, positionez vous dessus et faîtes un clique gauche, puis coulissez de haut en bas ou de droite à gauche.
+
+Pour supprimer un guide positionez vous dessus et faîtes un clique droit.
+
+Pour cacher les guides, faîtes rouler la molette.
+
+Pour les faires réaparaître cliquez n'importe ou avec la molette.
+
+
+Pour fixer un carré sur un guide, glissez le dessus, si le guide s'épassit c'est que le carré est lié. Lachez tout le guide reprend sa forme initial.
+
+Mais maintenant si vous déplacez le guide le carré suivera le mouvement.
+
+Vous pouvez lier un carré à plusieur guides, il suffit de le poser sur des intersections ou des guides très proches, trop proche.
+
+Enfin pour détacher le carré d'un guide, il suffit de l'éloigné de celui-ci. Le guide ce dé-épassaisira, pour vous confirmer le détachement.
+
+
+
